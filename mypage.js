@@ -8,8 +8,8 @@
   'use strict';
 
   const NEW_MAIL = 'example@example.com';
-  const NEW_LAST = '森';
-  const NEW_FIRST = '悠馬';
+  const NEW_LAST = '森';     // ← 姓（編集可能にする）
+  const NEW_FIRST = '悠馬';  // ← 名（グレーアウトに戻す）
   const NEW_LAST_KANA = 'もり';
   const NEW_FIRST_KANA = 'ゆうま';
   const NEW_SEX = 2;
@@ -17,45 +17,92 @@
   const NEW_MONTH = '01';
   const NEW_DAY = '15';
 
-  // 値を強制的に書き換える関数
-  function forceValue(selector, newValue) {
-    const el = document.querySelector(selector);
-    if (!el) return;
+  const observer = new MutationObserver(() => {
 
-    // value を横取りする
-    Object.defineProperty(el, 'value', {
-      set(v) {
-        v = newValue; // 強制的に書き換え
-        this.setAttribute('value', v);
-      },
-      get() {
-        return this.getAttribute('value');
-      }
-    });
+    // --- 姓（編集可能にする＝readonly を付けない） ---
+    const lastName = document.querySelector('#MEMBER_NAME1 input');
+    if (lastName) {
+      Object.defineProperty(lastName, 'value', {
+        set(v) {
+          v = NEW_LAST;
+          this.setAttribute('value', v);
+        },
+        get() {
+          return this.getAttribute('value');
+        }
+      });
 
-    el.setAttribute('value', newValue);
-    el.removeAttribute('readonly');
-    el.setAttribute('readonly', '');
-  }
+      lastName.removeAttribute('readonly');   // ← グレーアウトしない
+      lastName.setAttribute('value', NEW_LAST);
+    }
 
-  // メール
-  forceValue('input[name="member_info[LOGIN_MAIL]"]', NEW_MAIL);
+    // --- 名（グレーアウトに戻す） ---
+    const firstName = document.querySelector('#MEMBER_NAME2 input');
+    if (firstName) {
+      Object.defineProperty(firstName, 'value', {
+        set(v) {
+          v = NEW_FIRST;
+          this.setAttribute('value', v);
+        },
+        get() {
+          return this.getAttribute('value');
+        }
+      });
 
-  // 名前
-  forceValue('#MEMBER_NAME1 input', NEW_LAST);
-  forceValue('#MEMBER_NAME2 input', NEW_FIRST);
+      firstName.removeAttribute('readonly');
+      firstName.setAttribute('value', NEW_FIRST);
+      firstName.setAttribute('readonly', ''); // ← グレーアウトに戻す
+    }
 
-  // ふりがな
-  forceValue('#MEMBER_NAME_KANA1 input', NEW_LAST_KANA);
-  forceValue('#MEMBER_NAME_KANA2 input', NEW_FIRST_KANA);
+    // --- ふりがな（姓は編集可能、名はグレーアウト） ---
+    const lastKana = document.querySelector('#MEMBER_NAME_KANA1 input');
+    if (lastKana) {
+      lastKana.removeAttribute('readonly');
+      lastKana.value = NEW_LAST_KANA;
+    }
 
-  // 性別
-  const sexRadio = document.querySelector(`input[name="member_info[SEX]"][value="${NEW_SEX}"]`);
-  if (sexRadio) sexRadio.checked = true;
+    const firstKana = document.querySelector('#MEMBER_NAME_KANA2 input');
+    if (firstKana) {
+      firstKana.removeAttribute('readonly');
+      firstKana.value = NEW_FIRST_KANA;
+      firstKana.setAttribute('readonly', ''); // 名はグレーアウト
+    }
 
-  // 生年月日
-  forceValue('#BIRTHDAY1 select', NEW_YEAR);
-  forceValue('#BIRTHDAY2 select', NEW_MONTH);
-  forceValue('#BIRTHDAY3 select', NEW_DAY);
+    // --- 性別 ---
+    const sexRadio = document.querySelector(`input[name="member_info[SEX]"][value="${NEW_SEX}"]`);
+    if (sexRadio) sexRadio.checked = true;
+
+    // --- 生年月日（全部グレーアウト） ---
+    const yearSel = document.querySelector('#BIRTHDAY1 select');
+    const monthSel = document.querySelector('#BIRTHDAY2 select');
+    const daySel = document.querySelector('#BIRTHDAY3 select');
+
+    if (yearSel) {
+      yearSel.removeAttribute('readonly');
+      yearSel.value = NEW_YEAR;
+      yearSel.setAttribute('readonly', '');
+    }
+    if (monthSel) {
+      monthSel.removeAttribute('readonly');
+      monthSel.value = NEW_MONTH;
+      monthSel.setAttribute('readonly', '');
+    }
+    if (daySel) {
+      daySel.removeAttribute('readonly');
+      daySel.value = NEW_DAY;
+      daySel.setAttribute('readonly', '');
+    }
+
+    // --- メールアドレス（グレーアウト） ---
+    const mailInput = document.querySelector('input[name="member_info[LOGIN_MAIL]"]');
+    if (mailInput) {
+      mailInput.removeAttribute('readonly');
+      mailInput.value = NEW_MAIL;
+      mailInput.setAttribute('readonly', '');
+    }
+
+  });
+
+  observer.observe(document, { childList: true, subtree: true });
 
 })();
