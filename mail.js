@@ -3,6 +3,7 @@
 // @match https://ticket.tv-asahi.co.jp/tp/member/payment
 // @match https://ticket.tv-asahi.co.jp/tp/member/ticket/unused 
 // @match https://ticket.tv-asahi.co.jp/tp/member/ticket/old
+// @match https://ticket.tv-asahi.co.jp/tp/member/ticket
 // @run-at document-start
 // ==/UserScript==
 
