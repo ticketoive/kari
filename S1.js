@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name S1
-// @match https://ticket.tv-asahi.co.jp/tp/ticket/access/QbP9lLvsShdV5GvwaN3hmFugbcQ9F1HbdVEIXDtbsXb7bjQFXe3f8sbXeETYSbnS
+// @match https://ticket.tv-asahi.co.jp/tp/ticket/access/lC2oCtnUETRk2zZPdufw2j9HZYAOQfeaj650FGJp7CS8FNpNBXoMQYE0MYu4DVNL
 // ==/UserScript==
 
 (function () {
