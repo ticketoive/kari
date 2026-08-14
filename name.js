@@ -4,15 +4,12 @@
 // ==/UserScript==
 
 (function () {
+  'use strict';
 
-'use strict';
-
-driver.execute_script("""
-document.querySelectorAll('. gen_code span').forEach(el => {
-  if (el.textContent.trim() === '増田 佑亮') {
-    el.textContent = '森 悠馬';
-  }
-});
-""")
+  document.querySelectorAll('. gen_code span').forEach(el => {
+    if (el.textContent.trim() === '増田 佑亮') {
+      el.textContent = '森 悠馬';
+    }
+  });
 
 })();
