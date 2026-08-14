@@ -1,6 +1,8 @@
 // ==UserScript==
 // @name mail
 // @match https://ticket.tv-asahi.co.jp/tp/member/payment
+// @match https://ticket.tv-asahi.co.jp/tp/member/ticket/unused 
+// @match https://ticket.tv-asahi.co.jp/tp/member/ticket/old
 // @run-at document-start
 // ==/UserScript==
 
