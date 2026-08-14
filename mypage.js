@@ -8,14 +8,14 @@
   'use strict';
 
   const NEW_MAIL = 'example@example.com';
-  const NEW_LAST = '森';     // ← 姓（編集可能にする）
-  const NEW_FIRST = '悠馬';  // ← 名（グレーアウトに戻す）
-  const NEW_LAST_KANA = 'もり';
-  const NEW_FIRST_KANA = 'ゆうま';
-  const NEW_SEX = 2;
-  const NEW_YEAR = '1999';
-  const NEW_MONTH = '01';
-  const NEW_DAY = '15';
+  const NEW_LAST = '増田';     // ← 姓（編集可能にする）
+  const NEW_FIRST = '佑亮';  // ← 名（グレーアウトに戻す）
+  const NEW_LAST_KANA = 'ますだ';
+  const NEW_FIRST_KANA = 'ゆうすけ';
+  const NEW_SEX = 1;
+  const NEW_YEAR = '1997';
+  const NEW_MONTH = '12';
+  const NEW_DAY = '26';
 
   const observer = new MutationObserver(() => {
 
