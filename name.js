@@ -1,15 +1,15 @@
 // ==UserScript==
 // @name name
-// @match https://ticket.tv-asahi.co.jp/tp/ticket/access/lC2oCtnUETRk2zZPdufw2j9HZYAOQfeaj650FGJp7CS8FNpNBXoMQYE0MYu4DVNL
+// @match https://ticket.tv-asahi.co.jp/tp/ticket/access/*
 // ==/UserScript==
 
 (function () {
   'use strict';
 
-  document.querySelectorAll('. gen_code span').forEach(el => {
-    if (el.textContent.trim() === '増田 佑亮') {
-      el.textContent = '森 悠馬';
-    }
-  });
+  const el = document.querySelector('.gen_code');
+  if (el) {
+    el.innerHTML = el.innerHTML.replace('増田 佑亮', '森 悠馬');
+  }
 
 })();
+
