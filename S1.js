@@ -4,15 +4,13 @@
 // ==/UserScript==
 
 (function () {
+  'use strict';
 
-'use strict';
-
-driver.execute_script("""
-document.querySelectorAll('.auth_name span').forEach(el => {
-  if (el.textContent.trim() === '150') {
-    el.textContent = '1';
-  }
-});
-""")
+  document.querySelectorAll('.auth_name span').forEach(el => {
+    if (el.textContent.trim() === '150') {
+      el.textContent = '1';
+    }
+  });
 
 })();
+
