@@ -1,5 +1,5 @@
 // ==UserScript==
-// @name ChangeMemberInfoNoFlash
+// @name mypage
 // @match https://account.tv-asahi.co.jp/apps/id_common/update_member.php?service_type_event_id=ticket&screen_id=edit&RTN=/tp/member/ticket
 // @run-at document-start
 // ==/UserScript==
