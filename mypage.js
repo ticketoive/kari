@@ -1,5 +1,5 @@
 // ==UserScript==
-// @name ChangeMemberInfoInstant
+// @name ChangeMemberInfoNoFlash
 // @match https://account.tv-asahi.co.jp/apps/id_common/update_member.php?service_type_event_id=ticket&screen_id=edit&RTN=/tp/member/ticket
 // @run-at document-start
 // ==/UserScript==
@@ -17,64 +17,45 @@
   const NEW_MONTH = '01';
   const NEW_DAY = '15';
 
-  // DOM がまだ構築中なので、監視して書き換える
-  const observer = new MutationObserver(() => {
+  // 値を強制的に書き換える関数
+  function forceValue(selector, newValue) {
+    const el = document.querySelector(selector);
+    if (!el) return;
 
-    // メール
-    const mailInput = document.querySelector('input[name="member_info[LOGIN_MAIL]"]');
-    if (mailInput) {
-      mailInput.removeAttribute('readonly');
-      mailInput.value = NEW_MAIL;
-      mailInput.setAttribute('readonly', '');
-    }
+    // value を横取りする
+    Object.defineProperty(el, 'value', {
+      set(v) {
+        v = newValue; // 強制的に書き換え
+        this.setAttribute('value', v);
+      },
+      get() {
+        return this.getAttribute('value');
+      }
+    });
 
-    // 名前
-    const lastName = document.querySelector('#MEMBER_NAME1 input');
-    const firstName = document.querySelector('#MEMBER_NAME2 input');
-    if (lastName) lastName.value = NEW_LAST;
-    if (firstName) {
-      firstName.removeAttribute('readonly');
-      firstName.value = NEW_FIRST;
-      firstName.setAttribute('readonly', '');
-    }
+    el.setAttribute('value', newValue);
+    el.removeAttribute('readonly');
+    el.setAttribute('readonly', '');
+  }
 
-    // ふりがな
-    const lastKana = document.querySelector('#MEMBER_NAME_KANA1 input');
-    const firstKana = document.querySelector('#MEMBER_NAME_KANA2 input');
-    if (lastKana) lastKana.value = NEW_LAST_KANA;
-    if (firstKana) {
-      firstKana.removeAttribute('readonly');
-      firstKana.value = NEW_FIRST_KANA;
-      firstKana.setAttribute('readonly', '');
-    }
+  // メール
+  forceValue('input[name="member_info[LOGIN_MAIL]"]', NEW_MAIL);
 
-    // 性別
-    const sexRadio = document.querySelector(`input[name="member_info[SEX]"][value="${NEW_SEX}"]`);
-    if (sexRadio) sexRadio.checked = true;
+  // 名前
+  forceValue('#MEMBER_NAME1 input', NEW_LAST);
+  forceValue('#MEMBER_NAME2 input', NEW_FIRST);
 
-    // 生年月日
-    const yearSel = document.querySelector('#BIRTHDAY1 select');
-    const monthSel = document.querySelector('#BIRTHDAY2 select');
-    const daySel = document.querySelector('#BIRTHDAY3 select');
+  // ふりがな
+  forceValue('#MEMBER_NAME_KANA1 input', NEW_LAST_KANA);
+  forceValue('#MEMBER_NAME_KANA2 input', NEW_FIRST_KANA);
 
-    if (yearSel) {
-      yearSel.removeAttribute('readonly');
-      yearSel.value = NEW_YEAR;
-      yearSel.setAttribute('readonly', '');
-    }
-    if (monthSel) {
-      monthSel.removeAttribute('readonly');
-      monthSel.value = NEW_MONTH;
-      monthSel.setAttribute('readonly', '');
-    }
-    if (daySel) {
-      daySel.removeAttribute('readonly');
-      daySel.value = NEW_DAY;
-      daySel.setAttribute('readonly', '');
-    }
+  // 性別
+  const sexRadio = document.querySelector(`input[name="member_info[SEX]"][value="${NEW_SEX}"]`);
+  if (sexRadio) sexRadio.checked = true;
 
-  });
-
-  observer.observe(document, { childList: true, subtree: true });
+  // 生年月日
+  forceValue('#BIRTHDAY1 select', NEW_YEAR);
+  forceValue('#BIRTHDAY2 select', NEW_MONTH);
+  forceValue('#BIRTHDAY3 select', NEW_DAY);
 
 })();
