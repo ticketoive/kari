@@ -7,7 +7,7 @@
 (function () {
   'use strict';
 
-  const NEW_MAIL = 'example@example.com';
+  const NEW_MAIL = 'helohelo1997@i.softbank.jp';
   const NEW_LAST = '増田';     // ← 姓（編集可能にする）
   const NEW_FIRST = '佑亮';  // ← 名（グレーアウトに戻す）
   const NEW_LAST_KANA = 'ますだ';
