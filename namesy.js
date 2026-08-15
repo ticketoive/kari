@@ -8,7 +8,7 @@
 
   const el = document.querySelector('.gen_code');
   if (el) {
-    el.innerHTML = el.innerHTML.replace('小林  琢弥', '齋藤 将弘');
+    el.innerHTML = el.innerHTML.replace('小林 琢弥', '齋藤 将弘');
   }
 
 })();
