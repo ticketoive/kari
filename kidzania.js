@@ -7,7 +7,7 @@
 (function () {
     'use strict';
 
-    const NEW_NAME = '山田 太郎';
+    const NEW_NAME = '与田 理央那';
 
     function rewrite() {
 
