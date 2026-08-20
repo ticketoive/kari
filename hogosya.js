@@ -1,5 +1,5 @@
 // ==UserScript==
-// @name         KidZania 名前・性別変更
+// @name         KidZania プロフィール偽装
 // @match        https://www.kidzania.jp/membersite/*
 // @grant        none
 // ==/UserScript==
@@ -8,7 +8,8 @@
     'use strict';
 
     const NEW_NAME = '山田 太郎';
-    const NEW_SEX  = '女性'; // 男性 / 女性
+    const NEW_KANA = 'ヤマダ タロウ';
+    const NEW_SEX  = '女性';
 
     function replaceProfile() {
 
@@ -22,25 +23,37 @@
             .forEach(item => {
 
                 const label =
-                    item.querySelector('.m-form-layoutConfirm__head .m-text__text');
+                    item.querySelector(
+                        '.m-form-layoutConfirm__head .m-text__text'
+                    );
 
                 const value =
-                    item.querySelector('.m-form-layoutConfirm__body .m-text__text');
+                    item.querySelector(
+                        '.m-form-layoutConfirm__body .m-text__text'
+                    );
 
                 if (!label || !value) return;
 
-                if (label.textContent.includes('氏名')) {
+                const text = label.textContent;
+
+                // 氏名
+                if (text.includes('氏名（カタカナ）')) {
+                    value.textContent = NEW_KANA;
+                }
+                else if (text.includes('氏名')) {
                     value.textContent = NEW_NAME;
                 }
 
-                if (label.textContent.includes('性別')) {
+                // 性別
+                if (text.includes('性別')) {
                     value.textContent = NEW_SEX;
                 }
-
             });
 
     }
 
     replaceProfile();
+
+    // キッザニア側の再描画対策
     setInterval(replaceProfile, 100);
 })();
