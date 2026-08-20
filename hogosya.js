@@ -1,5 +1,5 @@
 // ==UserScript==
-// @name         KidZania プロフィール偽装
+// @name         KidZania 保護者ページ
 // @match        https://www.kidzania.jp/membersite/*
 // @grant        none
 // ==/UserScript==
