@@ -1,5 +1,5 @@
 // ==UserScript==
-// @name         KidZania 名前変更
+// @name         KidZania 名前固定
 // @match        https://www.kidzania.jp/membersite/*
 // @grant        none
 // ==/UserScript==
@@ -7,14 +7,19 @@
 (function () {
     'use strict';
 
-    const NEW_NAME = '山田 太郎'; // ←変更したい名前
+    const NEW_NAME = '山田 太郎'; // ←ここを好きな名前に変更
 
     function replaceName() {
 
-        // ○○さんの
+        // 「○○さんの」
         document.querySelectorAll('.l-headerAccount__text').forEach(el => {
+
             if (el.textContent.includes('さんの')) {
                 el.textContent = `${NEW_NAME}さんの`;
+            }
+
+            if (el.textContent.trim() === 'マイページ') {
+                el.textContent = 'マイページ';
             }
         });
 
@@ -27,7 +32,6 @@
                 label &&
                 label.textContent.trim() === '搭乗者名'
             ) {
-
                 const value = item.querySelector('.m-panel-reserveTicket-info__text-main');
 
                 if (value) {
@@ -37,6 +41,12 @@
         });
     }
 
+    replaceName();
+
+    // SPA対策
+    setInterval(replaceName, 200);
+
+})();
     replaceName();
 
     setInterval(replaceName, 500);
