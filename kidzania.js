@@ -1,7 +1,5 @@
-// ==UserScript==
-// @name         KidZania 搭乗者名
-// @namespace    https://www.kidzania.jp/
-// @version      1.0
+/// ==UserScript==
+// @name         KidZania 搭乗者名変更
 // @match        https://www.kidzania.jp/membersite/reserve/confirm/ticket*
 // @grant        none
 // ==/UserScript==
@@ -9,18 +7,9 @@
 (function () {
     'use strict';
 
-    function updatePassengerName() {
+    const NEW_NAME = '山田 太郎'; // ←好きな名前
 
-        // 「増田 佑亮さんの」を取得
-        const accountText = document.querySelector('.l-headerAccount__text');
-
-        if (!accountText) return;
-
-        const headerName = accountText.textContent
-            .replace('さんの', '')
-            .trim();
-
-        // 「搭乗者名」を探す
+    function replaceName() {
         document.querySelectorAll('.m-panel-reserveTicket-info__item').forEach(item => {
 
             const label = item.querySelector('.m-panel-reserveTicket-info__text');
@@ -32,19 +21,18 @@
                 const value = item.querySelector('.m-panel-reserveTicket-info__text-main');
 
                 if (value) {
-                    value.textContent = headerName;
+                    value.textContent = NEW_NAME;
                 }
             }
         });
     }
 
-    updatePassengerName();
+    replaceName();
 
-    const observer = new MutationObserver(updatePassengerName);
-
-    observer.observe(document.body, {
+    new MutationObserver(replaceName).observe(document.body, {
         childList: true,
         subtree: true
     });
+})();
 
 })();
