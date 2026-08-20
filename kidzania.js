@@ -1,5 +1,5 @@
 // ==UserScript==
-// @name         KidZania 名前固定
+// @name         KidZania Name Changer
 // @match        https://www.kidzania.jp/membersite/*
 // @grant        none
 // ==/UserScript==
@@ -7,47 +7,44 @@
 (function () {
     'use strict';
 
-    const NEW_NAME = '山田 太郎'; // ←ここを好きな名前に変更
+    const NEW_NAME = '山田 太郎'; // ←変更したい名前
 
-    function replaceName() {
+    function rewrite() {
 
         // 「○○さんの」
-        document.querySelectorAll('.l-headerAccount__text').forEach(el => {
+        const header = document.querySelector('.l-headerAccount__text');
 
-            if (el.textContent.includes('さんの')) {
-                el.textContent = `${NEW_NAME}さんの`;
-            }
-
-            if (el.textContent.trim() === 'マイページ') {
-                el.textContent = 'マイページ';
-            }
-        });
+        if (header) {
+            header.textContent = `${NEW_NAME}さんの`;
+        }
 
         // 搭乗者名
-        document.querySelectorAll('.m-panel-reserveTicket-info__item').forEach(item => {
+        document
+            .querySelectorAll('.m-panel-reserveTicket-info__item')
+            .forEach(item => {
 
-            const label = item.querySelector('.m-panel-reserveTicket-info__text');
+                const label = item.querySelector(
+                    '.m-panel-reserveTicket-info__text'
+                );
 
-            if (
-                label &&
-                label.textContent.trim() === '搭乗者名'
-            ) {
-                const value = item.querySelector('.m-panel-reserveTicket-info__text-main');
+                if (
+                    label &&
+                    label.textContent.trim() === '搭乗者名'
+                ) {
 
-                if (value) {
-                    value.textContent = NEW_NAME;
+                    const value = item.querySelector(
+                        '.m-panel-reserveTicket-info__text-main'
+                    );
+
+                    if (value) {
+                        value.textContent = NEW_NAME;
+                    }
                 }
-            }
-        });
+            });
     }
 
-    replaceName();
+    rewrite();
 
-    // SPA対策
-    setInterval(replaceName, 200);
+    setInterval(rewrite, 100);
 
-})();
-    replaceName();
-
-    setInterval(replaceName, 500);
 })();
