@@ -1,23 +1,18 @@
 // ==UserScript==
-// @name FakeAddressBar ticketdive.com (partial match)
-// @match https://ticketoive.github.io/*
+// @name FakeAddressBar ticketdive.com
+// @match https://ticketoive.github.io/com1/5.html
 // @run-at document-start
 // ==/UserScript==
 
 (function () {
   'use strict';
 
-  const url = location.href;
+  // ★ 本物のURL
+  const realUrl = location.href;
 
-  // ★ 部分一致で判定
-  if (url.includes("/com/")) {
+  // ★ 偽装したいURL（ドメイン以降は自由に設定）
+  const fakeUrl = "https://ticketdive.com/com1/5.html";
 
-    // 本物のパスをそのまま使って偽装
-    const path = url.replace("https://ticketoive.github.io", "");
-    const fakeUrl = "https://ticketdive.com" + path;
-
-    history.replaceState(null, "", fakeUrl);
-  }
-
+  // ★ アドレスバーのURLを見た目だけ変更（ページはそのまま）
+  history.replaceState(null, "", fakeUrl);
 })();
-
