@@ -21,7 +21,7 @@
                     setTimeout(() => {
                         console.log('タブを閉じます');
                         window.close();
-                    }, 5000);
+                    }, 1000);
                 }
                 return;
             }
