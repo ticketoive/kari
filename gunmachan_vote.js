@@ -1,7 +1,6 @@
 // ==UserScript==
-// @name         Gunmachan 与田理央那 自動投票
+// @name        ぐんまちゃん 与田理央那 自動投票
 // @match        https://gunmachan-idolfes.com/votes/gunmachan_official_supporter2027/list
-// @grant        none
 // ==/UserScript==
 
 (function() {
@@ -17,17 +16,18 @@
                 if (button) {
                     console.log('与田理央那の投票ボタンをクリックします');
                     button.click();
-                } else {
-                    console.log('ボタンが見つかりませんでした');
+
+                    // 5秒後にタブを閉じる
+                    setTimeout(() => {
+                        console.log('タブを閉じます');
+                        window.close();
+                    }, 5000);
                 }
                 return;
             }
         }
-
-        console.log('与田理央那のカードが見つかりませんでした');
     }
 
-    // ページが動的に生成される可能性があるので少し待つ
     window.addEventListener('load', () => {
         setTimeout(clickYodaButton, 1200);
     });
