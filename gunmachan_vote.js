@@ -8,7 +8,7 @@
 
     function clickYodaButton() {
         const cards = document.querySelectorAll('.vote-list-item-card');
-
+        document.cookie = "gunmachan_official_supporter2027%3Avote=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/";
         for (const card of cards) {
             const title = card.querySelector('h3');
             if (title && title.textContent.trim() === '与田理央那') {
