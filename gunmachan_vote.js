@@ -1,5 +1,5 @@
 // ==UserScript==
-// @name        与田理央那 自動投票＋投票後に閉じる
+// @name        与田理央那 シンプル自動投票（5秒後に閉じる）
 // @match       https://gunmachan-idolfes.com/votes/gunmachan_official_supporter2027/list
 // ==/UserScript==
 
@@ -16,25 +16,15 @@
                     console.log('投票します');
                     button.click();
 
-                    // 投票後の画面変化を監視
-                    observeAfterVote();
+                    // 5秒後に閉じる
+                    setTimeout(() => {
+                        console.log('5秒経過 → タブを閉じます');
+                        window.close();
+                    }, 5000);
                 }
                 return;
             }
         }
-    }
-
-    function observeAfterVote() {
-        const observer = new MutationObserver(() => {
-            // 投票後に表示が変わる要素を検知する
-            const done = document.querySelector('.vote-complete, .vote-result, .modal, .alert');
-            if (done) {
-                console.log('投票完了を検知 → タブを閉じます');
-                window.close();
-            }
-        });
-
-        observer.observe(document.body, { childList: true, subtree: true });
     }
 
     window.addEventListener('load', () => {
