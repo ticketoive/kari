@@ -1,5 +1,5 @@
 // ==UserScript==
-// @name        投票成功通知＋タブ閉じ
+// @name        与田理央那 自動API型
 // @match       https://gunmachan-idolfes.com/*
 // ==/UserScript==
 
