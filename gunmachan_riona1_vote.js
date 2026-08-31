@@ -1,37 +1,32 @@
 // ==UserScript==
-// @name        与田理央那 自動投票
+// @name        与田理央那 自動投票（API直接版）
 // @match       https://gunmachan-idolfes.com/votes/gunmachan_official_supporter2027/list
+// @grant       GM_xmlhttpRequest
 // ==/UserScript==
 
 (function() {
     'use strict';
 
-    function clickYodaButton() {
-        const cards = document.querySelectorAll('.vote-list-item-card');
-        for (const card of cards) {
-            const title = card.querySelector('h3');
-            if (title && title.textContent.trim() === '与田理央那') {
-                const button = card.querySelector('.vote-list-item-button button');
-                if (button) {
-                    console.log('投票します');
+    const YODA_ID = "74";
 
-                    // 内部JSを確実に発火させるクリック
-                    button.dispatchEvent(new MouseEvent('mousedown', { bubbles: true }));
-                    button.dispatchEvent(new MouseEvent('mouseup', { bubbles: true }));
-                    button.dispatchEvent(new MouseEvent('click', { bubbles: true }));
+    function vote() {
+        const formData = new FormData();
+        formData.append("voteItemId", YODA_ID);
 
-                    // 5秒後に閉じる
-                    setTimeout(() => {
-                        console.log('5秒経過 → タブを閉じます');
-                        window.close();
-                    }, 5000);
-                }
-                return;
+        GM_xmlhttpRequest({
+            method: "POST",
+            url: "https://api.leadi.jp/v1/gunmachanIdolfes/votes/gunmachan_official_supporter2027",
+            data: formData,
+            headers: {
+                "Origin": "https://gunmachan-idolfes.com"
+            },
+            onload: function(res) {
+                console.log("投票結果:", res.responseText);
+                setTimeout(() => window.close(), 5000);
             }
-        }
+        });
     }
 
     window.addEventListener('load', () => {
-        setTimeout(clickYodaButton, 1200);
+        setTimeout(vote, 1000);
     });
-})();
