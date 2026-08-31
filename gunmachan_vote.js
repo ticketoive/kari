@@ -1,5 +1,5 @@
 // ==UserScript==
-// @name        与田理央那 シンプル自動投票（5秒後に閉じる）
+// @name        与田理央那 自動投票
 // @match       https://gunmachan-idolfes.com/votes/gunmachan_official_supporter2027/list
 // ==/UserScript==
 
