@@ -16,9 +16,9 @@
                     console.log('投票します');
                     button.click();
 
-                    // 5秒後に閉じる
+                    // 25秒後に閉じる
                     setTimeout(() => {
-                        console.log('5秒経過 → タブを閉じます');
+                        console.log('25秒経過 → タブを閉じます');
                         window.close();
                     }, 5000);
                 }
