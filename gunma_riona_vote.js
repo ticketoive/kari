@@ -1,5 +1,5 @@
 // ==UserScript==
-// @name        与田理央那 自動API型
+// @name      与田理央那 自動 （API型）
 // @match       https://gunmachan-idolfes.com/*
 // ==/UserScript==
 
@@ -23,13 +23,17 @@
         console.log("レスポンス:", text);
 
         if (r.status === 201) {
-            // ① ショートカット通知を起動
-            location.href = "shortcuts://run-shortcut?name=VoteSuccess";
 
-            // ② 少し待ってタブを閉じる
+            // ★ iframe でショートカット起動（ページ遷移扱いにならない）
+            const iframe = document.createElement("iframe");
+            iframe.style.display = "none";
+            iframe.src = "shortcuts://run-shortcut?name=VoteSuccess";
+            document.body.appendChild(iframe);
+
+            // ★ タブ閉じは通知後に確実に実行されるよう遅らせる
             setTimeout(() => {
-                window.close(); // ← ショートカットが開いたタブなら閉じられる
-            }, 5000);
+                window.close();
+            }, 4000);
         }
     }
 
@@ -37,4 +41,3 @@
         setTimeout(vote, 1200);
     });
 })();
-
