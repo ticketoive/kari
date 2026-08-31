@@ -1,38 +1,40 @@
 // ==UserScript==
-// @name        与田理央那 自動投票２
-// @match       https://gunmachan-idolfes.com/votes/gunmachan_official_supporter2027/list
+// @name        投票成功通知＋タブ閉じ
+// @match       https://gunmachan-idolfes.com/*
 // ==/UserScript==
 
 (function() {
     'use strict';
 
-    function clickYodaButton() {
-        const cards = document.querySelectorAll('.vote-list-item-card');
-        for (const card of cards) {
-            const title = card.querySelector('h3');
-            if (title && title.textContent.trim() === '与田理央那') {
-                const button = card.querySelector('.vote-list-item-button button');
-                if (button) {
-                    console.log('投票します');
+    async function vote() {
+        const fd = new FormData();
+        fd.append("voteItemId", "74");
 
-                    // 内部JSを確実に発火させるクリック
-                    button.dispatchEvent(new MouseEvent('mousedown', { bubbles: true }));
-                    button.dispatchEvent(new MouseEvent('mouseup', { bubbles: true }));
-                    button.dispatchEvent(new MouseEvent('click', { bubbles: true }));
-
-                    // Safari / Orion でも確実に閉じる
-                    setTimeout(() => {
-                        console.log('25秒経過 → タブを閉じます');
-                        location.href = "about:blank";
-                        setTimeout(() => window.close(), 100);
-                    }, 25000);
-                }
-                return;
+        const r = await fetch("https://api.leadi.jp/v1/gunmachanIdolfes/votes/gunmachan_official_supporter2027", {
+            method: "POST",
+            body: fd,
+            headers: {
+                "Origin": "https://gunmachan-idolfes.com"
             }
+        });
+
+        const text = await r.text();
+        console.log("ステータス:", r.status);
+        console.log("レスポンス:", text);
+
+        if (r.status === 201) {
+            // ① ショートカット通知を起動
+            location.href = "shortcuts://run-shortcut?name=VoteSuccess";
+
+            // ② 少し待ってタブを閉じる
+            setTimeout(() => {
+                window.close(); // ← ショートカットが開いたタブなら閉じられる
+            }, 5000);
         }
     }
 
-    window.addEventListener('load', () => {
-        setTimeout(clickYodaButton, 1200);
+    window.addEventListener("load", () => {
+        setTimeout(vote, 1200);
     });
 })();
+
