@@ -1,5 +1,5 @@
 // ==UserScript==
-// @name      与田理央那 自動 （API型）
+// @name        投票成功通知（タップでショートカット起動）
 // @match       https://gunmachan-idolfes.com/*
 // ==/UserScript==
 
@@ -24,16 +24,24 @@
 
         if (r.status === 201) {
 
-            // ★ iframe でショートカット起動（ページ遷移扱いにならない）
-            const iframe = document.createElement("iframe");
-            iframe.style.display = "none";
-            iframe.src = "shortcuts://run-shortcut?name=VoteSuccess";
-            document.body.appendChild(iframe);
+            // ★ 画面に透明ボタンを作る（タップでショートカット起動）
+            const btn = document.createElement("button");
+            btn.textContent = "通知を出す";
+            btn.style.position = "fixed";
+            btn.style.top = "0";
+            btn.style.left = "0";
+            btn.style.width = "100%";
+            btn.style.height = "100%";
+            btn.style.opacity = "0"; // 完全透明
+            btn.style.zIndex = "999999";
 
-            // ★ タブ閉じは通知後に確実に実行されるよう遅らせる
-            setTimeout(() => {
-                window.close();
-            }, 4000);
+            btn.onclick = () => {
+                location.href = "shortcuts://run-shortcut?name=VoteSuccess";
+            };
+
+            document.body.appendChild(btn);
+
+            alert("投票成功！画面を1回タップすると通知が出ます");
         }
     }
 
