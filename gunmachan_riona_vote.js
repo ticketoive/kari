@@ -20,7 +20,7 @@
                     setTimeout(() => {
                         console.log('25秒経過 → タブを閉じます');
                         window.close();
-                    }, 5000);
+                    }, 25000);
                 }
                 return;
             }
