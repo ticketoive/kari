@@ -1,5 +1,5 @@
- // ==UserScript==
-// @name        与田理央那 自動投票(API型)
+// ==UserScript==
+// @name        投票成功→3秒表示→自動タブ閉じ
 // @match       https://gunmachan-idolfes.com/*
 // ==/UserScript==
 
@@ -24,15 +24,26 @@
 
         if (r.status === 201) {
 
-            alert("投票成功！");
+            // ★ 画面中央に3秒だけ表示するメッセージ
+            const msg = document.createElement("div");
+            msg.textContent = "与田理央那に投票しました！";
+            msg.style.position = "fixed";
+            msg.style.top = "50%";
+            msg.style.left = "50%";
+            msg.style.transform = "translate(-50%, -50%)";
+            msg.style.padding = "20px 30px";
+            msg.style.background = "rgba(0,0,0,0.8)";
+            msg.style.color = "white";
+            msg.style.fontSize = "22px";
+            msg.style.borderRadius = "12px";
+            msg.style.zIndex = "999999";
+            document.body.appendChild(msg);
 
-            // ★ Safari / Orion で確実に閉じる方法
-            window.addEventListener("focus", () => {
-                setTimeout(() => {
-                    window.close();
-                }, 200);
-            }, { once: true });
-
+            // ★ 3秒後にメッセージ消してタブ閉じる
+            setTimeout(() => {
+                msg.remove();
+                window.close();
+            }, 3000);
         }
     }
 
