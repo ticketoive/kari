@@ -1,14 +1,44 @@
 // ==UserScript==
-// @name        与田理央那　自動投票（API型）
+// @name        与田理央那 自動投票（API型）＋カウンター
 // @match       https://gunmachan-idolfes.com/*
 // ==/UserScript==
 
 (function() {
     'use strict';
 
+    // ★ 今日の日付（例：2026-09-02）
+    const today = new Date().toISOString().slice(0, 10);
+
+    // ★ 保存されている日付とカウントを取得
+    const savedDate = localStorage.getItem("yoda_vote_date");
+    let count = Number(localStorage.getItem("yoda_vote_count") || 0);
+
+    // ★ 日付が変わっていたらリセット
+    if (savedDate !== today) {
+        count = 0;
+        localStorage.setItem("yoda_vote_count", count);
+        localStorage.setItem("yoda_vote_date", today);
+    }
+
+    // ★ 右上に常時表示するカウンターを作成
+    const counter = document.createElement("div");
+    counter.textContent = `今日の成功: ${count} 回`;
+    counter.style.position = "fixed";
+    counter.style.top = "10px";
+    counter.style.right = "10px";
+    counter.style.padding = "8px 12px";
+    counter.style.background = "rgba(28,28,30,0.85)";
+    counter.style.color = "#fff";
+    counter.style.fontSize = "14px";
+    counter.style.fontWeight = "600";
+    counter.style.borderRadius = "12px";
+    counter.style.zIndex = "999999";
+    counter.style.boxShadow = "0 4px 20px rgba(0,0,0,0.25)";
+    document.body.appendChild(counter);
+
     async function vote() {
 
-        const startTime = performance.now(); // ★ 投票開始時刻
+        const startTime = performance.now();
 
         const fd = new FormData();
         fd.append("voteItemId", "74");
@@ -25,7 +55,7 @@
         console.log("ステータス:", r.status);
         console.log("レスポンス:", text);
 
-        // ★ メッセージ表示用の関数
+        // ★ メッセージ表示用
         function showMessage(msgText, color = "#fff") {
             const msg = document.createElement("div");
             msg.textContent = msgText;
@@ -43,19 +73,23 @@
             msg.style.boxShadow = "0 8px 30px rgba(0,0,0,0.25)";
             msg.style.zIndex = "999999";
             document.body.appendChild(msg);
-
-            return msg; // ← 後で追記するため返す
+            return msg;
         }
 
         if (r.status === 201) {
 
-            // ★ 経過秒数を計算
+            // ★ カウント +1
+            count++;
+            localStorage.setItem("yoda_vote_count", count);
+            localStorage.setItem("yoda_vote_date", today);
+
+            // ★ 右上の表示を更新
+            counter.textContent = `今日の成功: ${count} 回`;
+
+            // ★ 経過秒数
             const elapsed = ((performance.now() - startTime) / 1000).toFixed(2);
 
-            // ★ メッセージを作成
             const msg = showMessage("与田理央那に投票しました！");
-
-            // ★ 秒数を下に追加
             const sub = document.createElement("div");
             sub.textContent = `処理時間: ${elapsed} 秒`;
             sub.style.marginTop = "6px";
@@ -63,15 +97,13 @@
             sub.style.opacity = "0.8";
             msg.appendChild(sub);
 
-            // ★ 3秒後に閉じる
             setTimeout(() => {
                 msg.remove();
                 window.close();
             }, 3000);
 
         } else {
-            // ★ 失敗（400など）
-            showMessage(`既に投票済です（${r.status}）`, "#ff6b6b");
+            showMessage(`投票失敗（${r.status}）`, "#ff6b6b");
         }
     }
 
