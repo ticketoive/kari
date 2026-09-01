@@ -1,12 +1,12 @@
 // ==UserScript==
-// @name　60秒でブラウザ閉じる
-// @match https://gunmachan-idolfes.com/*
+// @name    60秒でブラウザ閉じる
+// @match   https://gunmachan-idolfes.com/*
 // ==/UserScript==
 (function () {
-use strict';
+    'use strict';
 
-setTimeout(() => {
-console.log('60秒経過。タブを閉じます。');
-window.close();
-}, 60000);
+    setTimeout(() => {
+        console.log('60秒経過。タブを閉じます。');
+        window.close();
+    }, 60000);
 })();
