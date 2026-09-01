@@ -1,5 +1,7 @@
-// ==UserScript==
-// @name        与田理央那 自動投票(API型)  
+ // ==UserScript==
+// @name        与田理央那 自動投票(API型)
+// @match       https://gunmachan-idolfes.com/*
+// ==/UserScript==
 
 (function() {
     'use strict';
