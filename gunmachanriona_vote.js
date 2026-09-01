@@ -7,6 +7,9 @@
     'use strict';
 
     async function vote() {
+
+        const startTime = performance.now(); // ★ 投票開始時刻
+
         const fd = new FormData();
         fd.append("voteItemId", "74");
 
@@ -41,17 +44,34 @@
             msg.style.zIndex = "999999";
             document.body.appendChild(msg);
 
-            setTimeout(() => msg.remove(), 3000);
+            return msg; // ← 後で追記するため返す
         }
 
         if (r.status === 201) {
-            // 成功
-            showMessage("与田理央那に投票しました！");
-            setTimeout(() => window.close(), 3000);
+
+            // ★ 経過秒数を計算
+            const elapsed = ((performance.now() - startTime) / 1000).toFixed(2);
+
+            // ★ メッセージを作成
+            const msg = showMessage("与田理央那に投票しました！");
+
+            // ★ 秒数を下に追加
+            const sub = document.createElement("div");
+            sub.textContent = `処理時間: ${elapsed} 秒`;
+            sub.style.marginTop = "6px";
+            sub.style.fontSize = "14px";
+            sub.style.opacity = "0.8";
+            msg.appendChild(sub);
+
+            // ★ 3秒後に閉じる
+            setTimeout(() => {
+                msg.remove();
+                window.close();
+            }, 3000);
 
         } else {
             // ★ 失敗（400など）
-            showMessage(`既に投票済です。（${r.status}）`, "#ff6b6b");
+            showMessage(`既に投票済です（${r.status}）`, "#ff6b6b");
         }
     }
 
