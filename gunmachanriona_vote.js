@@ -28,14 +28,17 @@
             const msg = document.createElement("div");
             msg.textContent = "与田理央那に投票しました！";
             msg.style.position = "fixed";
-            msg.style.top = "50%";
+            msg.style.top = "80px";
             msg.style.left = "50%";
-            msg.style.transform = "translate(-50%, -50%)";
-            msg.style.padding = "20px 30px";
-            msg.style.background = "rgba(0,0,0,0.8)";
-            msg.style.color = "white";
-            msg.style.fontSize = "22px";
-            msg.style.borderRadius = "12px";
+            msg.style.transform = "translateX(-50%)";
+            msg.style.padding = "12px 18px";
+            msg.style.background = "rgba(28,28,30,0.95)";
+            msg.style.backdropFilter = "blur(15px)";
+            msg.style.color = "#fff";
+            msg.style.fontSize = "16px";
+            msg.style.fontWeight = "600";
+            msg.style.borderRadius = "16px";
+            msg.style.boxShadow = "0 8px 30px rgba(0,0,0,0.25)";
             msg.style.zIndex = "999999";
             document.body.appendChild(msg);
 
