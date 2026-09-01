@@ -1,6 +1,7 @@
 // ==UserScript==
 // @name    60秒でブラウザ閉じる
 // @match   https://gunmachan-idolfes.com/*
+// @grant   window.close
 // ==/UserScript==
 (function () {
     'use strict';
