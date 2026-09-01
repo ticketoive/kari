@@ -22,11 +22,10 @@
         console.log("ステータス:", r.status);
         console.log("レスポンス:", text);
 
-        if (r.status === 201) {
-
-            // ★ 画面中央に3秒だけ表示するメッセージ
+        // ★ メッセージ表示用の関数
+        function showMessage(msgText, color = "#fff") {
             const msg = document.createElement("div");
-            msg.textContent = "与田理央那に投票しました！";
+            msg.textContent = msgText;
             msg.style.position = "fixed";
             msg.style.top = "80px";
             msg.style.left = "50%";
@@ -34,7 +33,7 @@
             msg.style.padding = "12px 18px";
             msg.style.background = "rgba(28,28,30,0.95)";
             msg.style.backdropFilter = "blur(15px)";
-            msg.style.color = "#fff";
+            msg.style.color = color;
             msg.style.fontSize = "16px";
             msg.style.fontWeight = "600";
             msg.style.borderRadius = "16px";
@@ -42,11 +41,17 @@
             msg.style.zIndex = "999999";
             document.body.appendChild(msg);
 
-            // ★ 3秒後にメッセージ消してタブ閉じる
-            setTimeout(() => {
-                msg.remove();
-                window.close();
-            }, 3000);
+            setTimeout(() => msg.remove(), 3000);
+        }
+
+        if (r.status === 201) {
+            // 成功
+            showMessage("与田理央那に投票しました！");
+            setTimeout(() => window.close(), 3000);
+
+        } else {
+            // ★ 失敗（400など）
+            showMessage(`既に投票済です。（${r.status}）`, "#ff6b6b");
         }
     }
 
