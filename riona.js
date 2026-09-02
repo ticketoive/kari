@@ -1,5 +1,5 @@
 // ==UserScript==
-// @name        与田理央那 自動投票（Cloudflare永続カウンター）
+// @name        与田理央那 自動投票（完成版）
 // @match       https://gunmachan-idolfes.com/*
 // ==/UserScript==
 
