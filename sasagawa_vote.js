@@ -1,5 +1,5 @@
 // ==UserScript==
-// @name        笹川奈那 自動投票（API型）（UI改善版）
+// @name        笹川奈那 自動投票（API型）（タブ閉じ強化版）
 // @match       https://gunmachan-idolfes.com/*
 // @run-at      document-start
 // ==/UserScript==
