@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name        神田みか 自動投票（API型）（タブ閉じ強化版）
 // @match       https://gunmachan-idolfes.com/*
-// @run-at      document-start
+// @run-at      document-end
 // ==/UserScript==
 
 (function() {
@@ -105,12 +105,6 @@
             msg.remove();
             forceClose();
         }, 3000);
-
-    }
-
-    vote();
-
-})();
 
     }
 
