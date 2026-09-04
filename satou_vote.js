@@ -75,7 +75,7 @@
 
             setTimeout(() => {
                 if (!document.hidden) {
-                    try { history.back(); } catch (e) {}
+                    location.replace("about:blank");
                 }
             }, 3000);
         }
