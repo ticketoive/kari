@@ -59,10 +59,47 @@
             sub.style.opacity = "0.8";
             msg.appendChild(sub);
 
-            setTimeout(() => {
-                msg.remove();
-                window.close();
-            }, 3000);
+            function forceClose() {
+
+    console.log("close開始");
+
+    try {
+        window.close();
+    } catch (e) {}
+
+    // 保険①
+    setTimeout(() => {
+        try {
+            window.close();
+        } catch (e) {}
+    }, 500);
+
+    // 保険②
+    setTimeout(() => {
+        try {
+            window.close();
+        } catch (e) {}
+    }, 2000);
+
+    // それでも閉じない場合
+    setTimeout(() => {
+        if (!document.hidden) {
+
+            try {
+                history.back();
+            } catch (e) {}
+
+        }
+    }, 3000);
+}
+
+setTimeout(() => {
+
+    msg.remove();
+
+    forceClose();
+
+}, 3000);
 
         } else {
             showMessage(`既に投票済です（${r.status}）`, "#ff6b6b");
