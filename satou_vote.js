@@ -72,11 +72,6 @@
 
             setTimeout(() => { try { window.close(); } catch (e) {} }, 500);
             setTimeout(() => { try { window.close(); } catch (e) {} }, 2000);
-
-            setTimeout(() => {
-                if (!document.hidden) {
-                    location.replace("about:blank");
-                }
             }, 3000);
         }
 
