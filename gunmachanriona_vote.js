@@ -46,11 +46,34 @@
             return msg;
         }
 
+        function forceClose() {
+            console.log("close開始");
+
+            try { window.close(); } catch (e) {}
+
+            setTimeout(() => {
+                try { window.close(); } catch (e) {}
+            }, 500);
+
+            setTimeout(() => {
+                try { window.close(); } catch (e) {}
+            }, 2000);
+
+            setTimeout(() => {
+                if (!document.hidden) {
+                    try { history.back(); } catch (e) {}
+                }
+            }, 3000);
+        }
+
+        // ★ 成功時と失敗時で同じ流れに統一
+        let msg;
+
         if (r.status === 201) {
 
             const elapsed = ((performance.now() - startTime) / 1000).toFixed(2);
 
-            const msg = showMessage("与田理央那に投票しました！");
+            msg = showMessage("与田理央那に投票しました！");
 
             const sub = document.createElement("div");
             sub.textContent = `処理時間: ${elapsed} 秒`;
@@ -59,54 +82,22 @@
             sub.style.opacity = "0.8";
             msg.appendChild(sub);
 
-            function forceClose() {
-
-    console.log("close開始");
-
-    try {
-        window.close();
-    } catch (e) {}
-
-    // 保険①
-    setTimeout(() => {
-        try {
-            window.close();
-        } catch (e) {}
-    }, 500);
-
-    // 保険②
-    setTimeout(() => {
-        try {
-            window.close();
-        } catch (e) {}
-    }, 2000);
-
-    // それでも閉じない場合
-    setTimeout(() => {
-        if (!document.hidden) {
-
-            try {
-                history.back();
-            } catch (e) {}
-
-        }
-    }, 3000);
-}
-
-setTimeout(() => {
-
-    msg.remove();
-
-    forceClose();
-
-}, 3000);
-
         } else {
-            showMessage(`既に投票済です（${r.status}）`, "#ff6b6b");
+
+            // ★ 400 など失敗時も成功時と同じ流れ
+            msg = showMessage(`既に投票済です（${r.status}）`, "#ff6b6b");
+
         }
+
+        // ★ 成功・失敗どちらでも 3 秒後に閉じる
+        setTimeout(() => {
+            msg.remove();
+            forceClose();
+        }, 3000);
+
     }
 
-    // ★ ページ読み込み前に即実行
     vote();
 
 })();
+
