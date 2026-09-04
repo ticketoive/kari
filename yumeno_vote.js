@@ -72,7 +72,6 @@
 
             setTimeout(() => { try { window.close(); } catch (e) {} }, 500);
             setTimeout(() => { try { window.close(); } catch (e) {} }, 2000);
-            }, 3000);
         }
 
         let msg;
