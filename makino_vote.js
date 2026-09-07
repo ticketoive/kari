@@ -12,7 +12,7 @@
         const startTime = performance.now();
 
         const fd = new FormData();
-        fd.append("voteItemId", "61");
+        fd.append("voteItemId", "69");
 
         const r = await fetch("https://api.leadi.jp/v1/gunmachanIdolfes/votes/gunmachan_official_supporter2027", {
             method: "POST",
